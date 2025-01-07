@@ -2212,11 +2212,13 @@ describe('BigQuery/Table', () => {
 
       sandbox.restore();
 
-      table.request = (reqOpts: DecorateRequestOptions, callback: Function) => {
-        callback(null, {rows});
-      };
-
       for (let i = 0; i < 2; i++) {
+        table.request = (
+          reqOpts: DecorateRequestOptions,
+          callback: Function
+        ) => {
+          callback(null, {rows: rows[i]});
+        };
         table.getRows(
           {selectedFields: selectedFields[i].join(',')},
           (err: Error, rows: {}) => {
